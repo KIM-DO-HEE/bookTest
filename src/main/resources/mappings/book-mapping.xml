@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bookDAO">
+
+	<insert id="insertBook" parameterType="bookVO">
+		INSERT INTO book VALUES(#{isbn},#{bookName},#{stock},#{author},#{type})
+	</insert>
+
+	<update id="updateBook" parameterType="bookVO">
+		UPDATE book
+		SET isbn=#{isbn}, bookName=#{bookName}, stock = #{stock}, author = #{author}, type = #{type}
+		WHERE
+		isbn = #{isbn}
+	</update>
+
+	<delete id="deleteBook" parameterType="bookVO">
+		DELETE FROM book WHERE
+		isbn = #{isbn}
+	</delete>
+	
+	
+	<select id="getBook" parameterType="bookVO" resultType="bookVO">
+		SELECT *
+		FROM book
+		WHERE isbn = #{isbn}
+	</select>
+	
+	
+	<select id="getBookList" resultType="bookVO">
+		SELECT *
+		FROM book
+	</select>
+	
+	<select id="getStockBookList" resultType="bookVO">
+		SELECT *
+		FROM book
+		WHERE type = "재고"
+	</select>
+	
+	<select id="getStockBook" parameterType="bookVO" resultType="bookVO">
+		SELECT *
+		FROM book
+		WHERE type = "재고" and isbn = #{isbn} and stock >= 1
+	</select>
+	
+	
+</mapper>
